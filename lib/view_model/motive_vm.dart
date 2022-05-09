@@ -8,6 +8,7 @@ import 'package:motivapp/model/comment.dart';
 class MotiveVM extends GetxController {
   var comment = Comment().obs;
   var local = "tr".obs;
+  var name = "".obs;
 
   getCommentByMotive(String mot) async {
     Get.dialog(const Dialog(
