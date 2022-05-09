@@ -3,10 +3,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:motivapp/model/controller_models/admin_controller_model.dart';
-import 'package:motivapp/model/comment.dart';
-import 'package:motivapp/model/controller_models/comment_controller_model.dart';
-import 'package:motivapp/model/motive.dart';
 import 'package:uuid/uuid.dart';
 
 class AdminVM extends GetxController {
@@ -26,31 +22,22 @@ class AdminVM extends GetxController {
     }
   }
 
-  addMotives(AdminControllerModel controllerModel) async {
+  addMotives(Map<String, dynamic> map) async {
     var uuid = (const Uuid()).v1();
-    Motive motive = Motive(
-        icon: controllerModel.iconCtrl.text,
-        category: controllerModel.categoryCtrl.text,
-        local: controllerModel.langCtrl.text,
-        order: int.tryParse(controllerModel.orderCtrl.text) ?? 1,
-        uuid: uuid);
+    map["uuid"] = uuid;
     try {
-      await FirebaseFirestore.instance.collection("motives").add(motive.toJson());
+      await FirebaseFirestore.instance.collection("motives").add(map);
       return true;
     } catch (e) {
       return false;
     }
   }
 
-  addComments(CommentControllerModel controllerModel) async {
+  addComments(Map<String, dynamic> map) async {
     var uuid = (const Uuid()).v1();
-    Comment comment = Comment(
-        comment: controllerModel.commentCtrl.text,
-        local: controllerModel.langCtrl.text,
-        motive: controllerModel.motiveCtrl.text,
-        uuid: uuid);
+    map["uuid"] = uuid;
     try {
-      await FirebaseFirestore.instance.collection("comments").add(comment.toJson());
+      await FirebaseFirestore.instance.collection("comments").add(map);
       return true;
     } catch (e) {
       return false;

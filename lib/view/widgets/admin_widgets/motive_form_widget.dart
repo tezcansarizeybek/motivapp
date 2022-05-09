@@ -1,60 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:motivapp/model/controller_models/admin_controller_model.dart';
+import 'package:motivapp/model/motive.dart';
 import 'package:motivapp/view_model/admin_vm.dart';
 
-class MotiveFormWidget extends StatelessWidget {
+class MotiveFormWidget extends StatefulWidget {
   const MotiveFormWidget({
     Key? key,
-    required this.adminControllerModel,
   }) : super(key: key);
 
-  final AdminControllerModel adminControllerModel;
+  @override
+  State<MotiveFormWidget> createState() => _MotiveFormWidgetState();
+}
+
+class _MotiveFormWidgetState extends State<MotiveFormWidget> {
+  List<TextEditingController> ctrlList = [];
+
+  final motive = Motive(
+      blue: 255,
+      green: 255,
+      red: 255,
+      title: "",
+      order: 1,
+      local: "tr",
+      category: "",
+      icon: "",
+      subtitle: "");
+
+  @override
+  void initState() {
+    ctrlList = [];
+    for (var i in motive.toJson().keys) {
+      ctrlList.add(TextEditingController());
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        child: Column(
+    return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-          child: TextFormField(
-              decoration: const InputDecoration(
-                label: Text("Category"),
-                border: OutlineInputBorder(),
-              ),
-              controller: adminControllerModel.categoryCtrl),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-          child: TextFormField(
-              decoration: const InputDecoration(
-                label: Text("Icon Link"),
-                border: OutlineInputBorder(),
-              ),
-              controller: adminControllerModel.iconCtrl),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-          child: TextFormField(
-              decoration: const InputDecoration(
-                label: Text("Order"),
-                border: OutlineInputBorder(),
-              ),
-              controller: adminControllerModel.orderCtrl),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-          child: TextFormField(
-              decoration: const InputDecoration(
-                label: Text("Language"),
-                border: OutlineInputBorder(),
-              ),
-              controller: adminControllerModel.langCtrl),
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+              child: TextFormField(
+                  decoration: InputDecoration(
+                    label: Text(motive.toJson().keys.elementAt(index)),
+                    border: const OutlineInputBorder(),
+                  ),
+                  controller: ctrlList.elementAt(index)),
+            ),
+            itemCount: ctrlList.length,
+          ),
         ),
         ElevatedButton(
             onPressed: () async {
-              var response = await Get.find<AdminVM>().addMotives(adminControllerModel);
+              Map<String, dynamic> map = {};
+              for (int i = 0; i < ctrlList.length; i++) {
+                map[motive.toJson().keys.elementAt(i)] =
+                    int.tryParse(ctrlList.elementAt(i).text) ?? ctrlList.elementAt(i).text;
+              }
+              var response = await Get.find<AdminVM>().addMotives(map);
               if (response) {
                 Get.snackbar("Success", "Successfully Added",
                     colorText: Colors.white, backgroundColor: Colors.green);
@@ -63,8 +69,8 @@ class MotiveFormWidget extends StatelessWidget {
                     colorText: Colors.white, backgroundColor: Colors.red);
               }
             },
-            child: const Text("Add Category"))
+            child: const Text("Add Motive"))
       ],
-    ));
+    );
   }
 }
