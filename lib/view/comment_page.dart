@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motivapp/model/motive.dart';
@@ -11,25 +13,34 @@ class CommentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: SafeArea(
+        child: BottomAppBar(
+          color: Color.fromRGBO(data.red ?? 0, data.green ?? 0, data.blue ?? 0, 100),
+          child: const Padding(child: Text("D'Mottie",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 24,fontFamily: "graphie",fontWeight: FontWeight.bold)),padding: EdgeInsets.all(16)),
+        ),
+      ),
       appBar: AppBar(
+        leading: InkWell(child: Image.memory(base64Decode(data.icon ?? ""),scale: 2,color: Colors.white),onTap: () {
+          Get.back();
+        }),
         title: Text("${data.title}"),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(data.red ?? 0, data.green ?? 0, data.blue ?? 0, 100),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
             child: Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Center(
-                child: Text(
-                  "${Get.find<MotiveVM>().comment.value.comment}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.indigo, fontSize: 24),
-                ),
+              child: Text(
+                "${(Get.find<MotiveVM>().comment.value.comment ?? "").replaceAll("\\n", "\n")}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.indigo, fontSize: 24),
               ),
             ),
           ),
+          Get.find<MotiveVM>().comment.value.url != "" ?
           Flexible(
             child: Container(
               decoration: BoxDecoration(
@@ -56,10 +67,8 @@ class CommentPage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-          Flexible(
-            child: Center(),
-          )
+          ) : Container()
+
         ],
       ),
     );

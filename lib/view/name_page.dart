@@ -36,32 +36,34 @@ class NamePage extends StatelessWidget {
               ),
               Expanded(
                 flex: 3,
-                child: Column(
-                  children: [
-                    const Text("Merhaba\nBen Mottie\nSenin adın ne?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 30, color: Colors.white)),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 18, right: Get.size.width / 4, left: Get.size.width / 4),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
-                          fillColor: Colors.white24,
-                          filled: true,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const Text("Merhaba\nBen Mottie\nSenin adın ne?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 30, color: Colors.white)),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 18, right: Get.size.width / 4, left: Get.size.width / 4),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
+                            fillColor: Colors.white24,
+                            filled: true,
+                          ),
+                          onFieldSubmitted: (value) async {
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            prefs.setString("name", value);
+                            Get.offAll(() => const MainPage());
+                          },
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.white, decoration: TextDecoration.none),
                         ),
-                        onFieldSubmitted: (value) async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          prefs.setString("name", value);
-                          Get.offAll(() => const MainPage());
-                        },
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 20, color: Colors.white, decoration: TextDecoration.none),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
             ],

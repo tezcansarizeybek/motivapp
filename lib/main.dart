@@ -7,9 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 var name = "";
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  WidgetsFlutterBinding.ensureInitialized(); // Async olduğunda initialize edebilmek için
+  await Firebase.initializeApp(); // Firebase uygulamasını alıyor.
+  SharedPreferences prefs = await SharedPreferences.getInstance(); // Sharedpreferences paketini çağırır
   name = prefs.getString("name") ?? "";
   runApp(const MyApp());
 }
@@ -21,7 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Motivapp',
+
       theme: ThemeData(
+        fontFamily: "graphie",
         primarySwatch: Colors.blue,
       ),
       home: name.isEmpty ? const NamePage() : const MainPage(),

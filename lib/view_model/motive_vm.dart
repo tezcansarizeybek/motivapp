@@ -11,15 +11,6 @@ class MotiveVM extends GetxController {
   var name = "".obs;
 
   getCommentByMotive(String mot) async {
-    Get.dialog(const Dialog(
-      child: SizedBox(
-          width: 100,
-          height: 250,
-          child: Padding(
-            padding: EdgeInsets.all(50),
-            child: CircularProgressIndicator(),
-          )),
-    ));
     var query = await FirebaseFirestore.instance
         .collection("comments")
         .where("motive", isEqualTo: mot)
@@ -33,7 +24,6 @@ class MotiveVM extends GetxController {
     } else {
       comment.value = Comment();
     }
-    if (Get.isDialogOpen ?? false) Get.back();
   }
 
   getLangs() async {
