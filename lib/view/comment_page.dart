@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:motivapp/model/motive.dart';
 import 'package:motivapp/view_model/motive_vm.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -36,7 +37,7 @@ class CommentPage extends StatelessWidget {
               child: Text(
                 "${(Get.find<MotiveVM>().comment.value.comment ?? "").replaceAll("\\n", "\n")}",
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.indigo, fontSize: 24),
+                style: TextStyle(color: HexColor(data.secondarycolor ?? ""), fontSize: 24),
               ),
             ),
           ),
@@ -61,7 +62,7 @@ class CommentPage extends StatelessWidget {
                     onTap: () => launchUrlString(Get.find<MotiveVM>().comment.value.url ?? ""),
                     child: Text(
                       "${data.subtitle}",
-                      style: const TextStyle(fontSize: 24, color: Colors.indigo),
+                      style: TextStyle(fontSize: 24, color: HexColor(data.secondarycolor ?? "")),
                     ),
                   ),
                 ),

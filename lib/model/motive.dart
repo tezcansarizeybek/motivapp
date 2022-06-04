@@ -10,6 +10,7 @@ class Motive {
     int? red,
     int? green,
     int? blue,
+    String? secondarycolor,
   }) {
     _uuid = uuid;
     _category = category;
@@ -21,6 +22,7 @@ class Motive {
     _red = red;
     _green = green;
     _blue = blue;
+    _secondarycolor = secondarycolor;
   }
 
   Motive.fromJson(dynamic json) {
@@ -34,6 +36,7 @@ class Motive {
     _red = json['red'];
     _green = json['green'];
     _blue = json['blue'];
+    _secondarycolor= json['secondarycolor'];
   }
 
   String? _uuid;
@@ -46,6 +49,7 @@ class Motive {
   int? _red;
   int? _green;
   int? _blue;
+  String? _secondarycolor;
 
   Motive copyWith({
     String? uuid,
@@ -58,6 +62,7 @@ class Motive {
     int? red,
     int? green,
     int? blue,
+    String? secondarycolor,
   }) =>
       Motive(
         uuid: uuid ?? _uuid,
@@ -70,6 +75,7 @@ class Motive {
         red: red ?? _red,
         green: green ?? _green,
         blue: blue ?? _blue,
+        secondarycolor: secondarycolor ?? _secondarycolor
       );
 
   String? get uuid => _uuid;
@@ -82,6 +88,7 @@ class Motive {
   int? get red => _red;
   int? get green => _green;
   int? get blue => _blue;
+  String? get secondarycolor => _secondarycolor;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -95,6 +102,7 @@ class Motive {
     map['red'] = _red;
     map['green'] = _green;
     map['blue'] = _blue;
+    map['secondarycolor'] = _secondarycolor;
     return map;
   }
 }

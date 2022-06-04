@@ -16,7 +16,7 @@ class NamePage extends StatelessWidget {
             gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [Colors.orange.shade200, Colors.red.shade200, Colors.pinkAccent.shade100])),
+                colors: [Colors.purpleAccent.shade200, Colors.deepPurple, Colors.blue.shade600])),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -30,10 +30,10 @@ class NamePage extends StatelessWidget {
                       style: TextStyle(fontSize: 30, color: Colors.white)),
                 ),
               ),
-              const Expanded(
-                flex: 4,
-                child: Icon(Icons.star),
-              ),
+              Expanded(flex: 2, child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset("assets/9.png"),
+              )),
               Expanded(
                 flex: 3,
                 child: SingleChildScrollView(
